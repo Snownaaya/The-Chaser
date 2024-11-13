@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float _horizontalSensitivity;
     [SerializeField] private float _verticalSensitivity;
 
-    private CameraInput _cameraInput;
+    private InputService _cameraInput;
 
     private float _cameraCurrentAngleX;
 
@@ -21,12 +22,24 @@ public class CameraFollow : MonoBehaviour
     private void Awake()
     {
         _cameraCurrentAngleX = _camera.localEulerAngles.x;
-        _cameraInput = new CameraInput();
+        _cameraInput = new InputService();
+    }
+
+    private void OnValidate()
+    {
+        if (_camera == null)
+            throw new ArgumentException(nameof(_camera));
+
+        if (_horizontalSensitivity <= 0)
+            throw new ArgumentOutOfRangeException(nameof(_horizontalSensitivity));
+
+        if (_verticalSensitivity <= 0)
+            throw new ArgumentOutOfRangeException(nameof(_verticalSensitivity));
     }
 
     private void Update()
     {
-        _cameraInput.GetMouseInput();
+        _cameraInput.GetDirection();
 
         ForwardDirection = Vector3.ProjectOnPlane(_camera.forward, Vector3.up).normalized;
         RightDirection = Vector3.ProjectOnPlane(_camera.right, Vector3.up).normalized;

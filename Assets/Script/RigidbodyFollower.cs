@@ -1,9 +1,10 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Chaser : MonoBehaviour
 {
-    [SerializeField] private Movement _target;
+    [SerializeField] private CharacterControllerMover _target;
 
     [SerializeField] private float _speed;
     [SerializeField] private float _stopDistance;
@@ -13,6 +14,18 @@ public class Chaser : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void OnValidate()
+    {
+        if(_target == null)
+            throw new NullReferenceException(nameof(_target));
+
+        if (_speed <= 0)
+            throw new ArgumentOutOfRangeException(nameof(_speed));
+
+        if( _stopDistance <= 0)
+            throw new ArgumentOutOfRangeException(nameof(_stopDistance));
     }
 
     private void FixedUpdate()
