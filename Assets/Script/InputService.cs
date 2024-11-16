@@ -2,23 +2,15 @@ using UnityEngine;
 
 public class InputService
 {
-    private readonly string HorizontalAxis = "Horizontal";
-    private readonly string VerticalAxis = "Vertical";
-    private readonly string MouseXInput = "Mouse X";
-    private readonly string MouseYInput = "Mouse Y";
+    private const string HorizontalAxis = "Horizontal";
+    private const string VerticalAxis = "Vertical";
+    private const string MouseXInput = "Mouse X";
+    private const string MouseYInput = "Mouse Y";
 
     public float MouseX { get; private set; }
     public float MouseY { get; private set; }
     public float Horizontal { get; private set; }
     public float Vertical { get; private set; }
-
-    public InputService(string horizontalAxis = "Horizontal", string verticalAxis = "Vertical", string mouseXInput = "Mouse X", string mouseYInput = "Mouse Y")
-    {
-        HorizontalAxis = horizontalAxis;
-        VerticalAxis = verticalAxis;
-        MouseXInput = mouseXInput;
-        MouseYInput = mouseYInput;
-    }
 
     public void UpdateInput()
     {
